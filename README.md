@@ -6,6 +6,7 @@ Its main methods are: **Show()** and **Hide()**.
 The OptionsBar library provides a set of predefined user-friendly controls that can be added to the options bar, such as **Button**, **LabelCheckBox**, **LabelComboBoxImage**, **LabelComboBox**, **LabelTextBox**, and **Separator**. Moreover, for users seeking further customization, the library allows the incorporation of user-defined controls. With these features, you can easily integrate a custom options bar into the Revit interface, allowing the user to access different settings without needing to open often annoying dialog boxes. Additionally, this library supports the integration of the custom options bar in conjunction with the native Revit options bar. Below, you'll find some examples of how this options bar is displayed.
 
 ## OptionsBar in Revit 2023
+Below is the integration of a custom options bar with the native Revit options bar.
 ![OptionsBar](./rvt2023/OptionsBar.gif)
 
 ## OptionsBar in Revit 2024
