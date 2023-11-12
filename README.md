@@ -13,8 +13,6 @@ The OptionsBar library provides a set of predefined user-friendly controls that 
 ## OptionsBar in Revit 2024
 **Light Theme**
 
-![OptionsBar](./rvt2024/optionsbarlight.gif)
-
 **Dark Theme**
 
 ![OptionsBar](./rvt2024/optionsbardark.gif)
