@@ -172,10 +172,10 @@ namespace SCADtools.OptionsBarSample
             optionsBar.Show(new List<UIElement>()
                                 {
                                     textBlock,
-                                    new Revit.UI.Separator(),
+                                    new SCADtools.Revit.UI.Separator(),
                                     labelComboBoxImage,
                                     button,
-                                    new Revit.UI.Separator(),
+                                    new SCADtools.Revit.UI.Separator(),
                                     labelComboBox,
                                     labelTextBox
                                 });
