@@ -44,7 +44,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace SCADtools.OptionsBarSample
 {
@@ -184,7 +183,7 @@ namespace SCADtools.OptionsBarSample
 
         private void ComboBoxControlOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = (ComboBox)sender;
+            System.Windows.Controls.ComboBox comboBox = (System.Windows.Controls.ComboBox)sender;
             if (comboBox.SelectedItem != null)
             {
                 ComboBoxItemText comboBoxItemText = (ComboBoxItemText)comboBox.SelectedItem;
