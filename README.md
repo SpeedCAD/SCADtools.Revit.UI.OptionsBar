@@ -8,8 +8,6 @@ The OptionsBar library provides a set of predefined user-friendly controls that 
 ## OptionsBar in Revit 2023
 **Below is the integration of a custom options bar with the native Revit options bar.**
 
-![OptionsBar](./rvt2023/optionsbar.gif)
-
 ## OptionsBar in Revit 2024
 **Light Theme**
 
