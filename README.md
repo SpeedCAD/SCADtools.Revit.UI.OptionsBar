@@ -13,11 +13,11 @@ The OptionsBar library provides a set of predefined user-friendly controls that 
 ## OptionsBar in Revit 2024
 **Light Theme**
 
-![OptionsBar](./rvt2024/OptionsBar_Light.gif)
+![OptionsBar](./rvt2024/optionsbarlight.gif)
 
 **Dark Theme**
 
-![OptionsBar](./rvt2024/OptionsBar_Dark.gif)
+![OptionsBar](./rvt2024/optionsbardark.gif)
 
 ## :floppy_disk: Download
 You can reference the DLL in a Visual Studio project the same way you load any external library.
