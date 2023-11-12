@@ -34,3 +34,180 @@ You can reference the DLL in a Visual Studio project the same way you load any e
 - The DLL files are made using [**Visual Studio**](https://github.com/microsoft) 2022.
 
 ## :keyboard: Code example
+```c#
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using SCADtools.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using ComboBox = System.Windows.Controls.ComboBox;
+
+namespace SCADtools.OptionsBarSample
+{
+    [TransactionAttribute(TransactionMode.Manual)]
+    internal class Sample : IExternalCommand
+    {
+        private OptionsBar optionsBar;
+
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            UIApplication uiapp = commandData.Application;
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            try
+            {
+                //Initialize OptionsBar
+                optionsBar = new OptionsBar();
+
+                DisplayOptionsBar();
+
+                //Some instructions to execute in Revit
+                IList<Element> pickElementsByRectangle = uidoc.Selection.PickElementsByRectangle("Select elements.");
+
+                //Optionally, you can disable the options bar while Revit is working
+                optionsBar.IsEnabled = false;
+
+                using (Transaction tr = new Transaction(doc, "Transaction name"))
+                {
+                    tr.Start();
+
+                    foreach (Element element in pickElementsByRectangle)
+                    {
+                        //TODO: Your code logic here
+                    }
+
+                    tr.Commit();
+                }
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return Result.Failed;
+            }
+            finally
+            {
+                //Hide the OptionsBar (IMPORTANT)
+                optionsBar.Hide();
+            }
+        }
+
+        private void DisplayOptionsBar()
+        {
+            //Initialize a TextBlock to display information at the start of the OptionsBar
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = "Create Bending Detail",
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(10, 0, 20, 0)
+            };
+
+            //Initialize a LabelComboBoxImage to display a list of bar images
+            LabelComboBoxImage labelComboBoxImage = new LabelComboBoxImage()
+            {
+                ShowLabel = false,
+                ItemsTextImage = GetRebarImages(),
+
+                //By default the width is 100
+                ComboBoxWidth = 220
+            };
+
+            //Initialize a Button
+            Revit.UI.Button button = new Revit.UI.Button()
+            {
+                Label = "...",
+                ToolTipTitle = "Rebar Shape Browser",
+                Description = "Launch/Close Rebar Shape Browser.",
+
+                //To indicate the separation of the Button with some control that is to its left
+                MarginLeft = 6
+            };
+
+            //Initialize some list of diameters
+            List<ComboBoxItemText> comboBoxItemTexts = new List<ComboBoxItemText>()
+                {
+                    new ComboBoxItemText() { ItemText = "8" },
+                    new ComboBoxItemText() { ItemText = "10" },
+                    new ComboBoxItemText() { ItemText = "12" },
+                    new ComboBoxItemText() { ItemText = "16" }
+                };
+            //Initialize a LabelComboBox to display a list of diameters
+            LabelComboBox labelComboBox = new LabelComboBox()
+            {
+                Label = "Diameter:",
+                ItemsText = comboBoxItemTexts,
+                ToolTipTitle = "Bar Diameter",
+                Description = "Specifies the bar diameter.",
+
+                //To indicate the separation of the LabelComboBox with some control that is to its left
+                MarginLeft = 10,
+
+                //By default the width is 100
+                ComboBoxWidth = 52
+            };
+            //Create some event
+            labelComboBox.ComboBoxControl.SelectionChanged += ComboBoxControlOnSelectionChanged;
+
+            //Initialize a LabelTextBox to indicate bar spacing
+            LabelTextBox labelTextBox = new LabelTextBox()
+            {
+                Label = "Spacing:",
+                Text = "20",
+                ToolTipTitle = "Reinforcement Spacing",
+                Description = "Specifies the spacing for rebar.",
+
+                //To indicate the separation of the LabelTextBox with some control that is to its left
+                MarginLeft = 10,
+
+                //By default the width is 50
+                TextBoxWidth = 52
+            };
+
+            //Display the OptionsBar
+            optionsBar.Show(new List<UIElement>()
+                                {
+                                    textBlock,
+                                    new Revit.UI.Separator(),
+                                    labelComboBoxImage,
+                                    button,
+                                    new Revit.UI.Separator(),
+                                    labelComboBox,
+                                    labelTextBox
+                                });
+        }
+
+        private void ComboBoxControlOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedItem != null)
+            {
+                ComboBoxItemText comboBoxItemText = (ComboBoxItemText)comboBox.SelectedItem;
+                MessageBox.Show("Selected item is: " + comboBoxItemText.ItemText);
+            }
+        }
+
+        private List<ComboBoxItemTextImage> GetRebarImages()
+        {
+            //Initialize some list of bar images
+            return new List<ComboBoxItemTextImage>()
+            {
+                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B1",
+                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B1.png", UriKind.Absolute)),
+                    IsVisibleImageCollapsed = true },
+                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B2",
+                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B2.png", UriKind.Absolute)),
+                    IsVisibleImageCollapsed = true },
+                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B3",
+                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B3.png", UriKind.Absolute)),
+                    IsVisibleImageCollapsed = true }
+            };
+        }
+    }
+}
+```
