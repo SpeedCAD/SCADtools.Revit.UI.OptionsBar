@@ -129,8 +129,8 @@ namespace SCADtools.OptionsBarSample
                 
                 ControlToolTip = new SCADtools.Revit.UI.ToolTip()
                 {
-                    ToolTipTitle = "Rebar Shape Browser",
-                    Description = "Launch/Close Rebar Shape Browser.",
+                    Title = "Rebar Shape Browser",
+                    Content = "Launch/Close Rebar Shape Browser.",
                 }
             };
 
@@ -156,8 +156,8 @@ namespace SCADtools.OptionsBarSample
 
                 ControlToolTip = new SCADtools.Revit.UI.ToolTip()
                 {
-                    ToolTipTitle = "Bar Diameter",
-                    Description = "Specifies the bar diameter.",
+                    Title = "Bar Diameter",
+                    Content = "Specifies the bar diameter.",
                 }
             };
             //Create some event
@@ -177,8 +177,8 @@ namespace SCADtools.OptionsBarSample
 
                 ControlToolTip = new SCADtools.Revit.UI.ToolTip()
                 {
-                    ToolTipTitle = "Reinforcement Spacing",
-                    Description = "Specifies the spacing for rebar.",
+                    Title = "Reinforcement Spacing",
+                    Content = "Specifies the spacing for rebar.",
                 }
             };
 
