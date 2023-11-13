@@ -127,7 +127,7 @@ namespace SCADtools.OptionsBarSample
                 //To indicate the separation of the Button with some control that is to its left
                 MarginLeft = 6,
                 
-                ControlToolTip = new SCADtools.Revit.UI.ToolTip()
+                ControlToolTip = new SCADtools.Revit.UI.ControlToolTip()
                 {
                     Title = "Rebar Shape Browser",
                     Content = "Launch/Close Rebar Shape Browser.",
@@ -154,7 +154,7 @@ namespace SCADtools.OptionsBarSample
                 //By default the width is 100
                 ComboBoxWidth = 52,
 
-                ControlToolTip = new SCADtools.Revit.UI.ToolTip()
+                ControlToolTip = new SCADtools.Revit.UI.ControlToolTip()
                 {
                     Title = "Bar Diameter",
                     Content = "Specifies the bar diameter.",
@@ -175,7 +175,7 @@ namespace SCADtools.OptionsBarSample
                 //By default the width is 50
                 TextBoxWidth = 52,
 
-                ControlToolTip = new SCADtools.Revit.UI.ToolTip()
+                ControlToolTip = new SCADtools.Revit.UI.ControlToolTip()
                 {
                     Title = "Reinforcement Spacing",
                     Content = "Specifies the spacing for rebar.",
