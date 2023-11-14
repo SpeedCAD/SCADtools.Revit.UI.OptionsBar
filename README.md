@@ -135,7 +135,7 @@ namespace SCADtools.OptionsBarSample
             };
 
             //Initialize some list of diameters
-            List<ComboBoxItemText> comboBoxItemTexts = new List<ComboBoxItemText>()
+            List<ComboBoxItemText> comboBoxItemsText = new List<ComboBoxItemText>()
                 {
                     new ComboBoxItemText() { ItemText = "8" },
                     new ComboBoxItemText() { ItemText = "10" },
@@ -146,7 +146,7 @@ namespace SCADtools.OptionsBarSample
             LabelComboBox labelComboBox = new LabelComboBox()
             {
                 Label = "Diameter:",
-                ItemsText = comboBoxItemTexts,
+                ItemsText = comboBoxItemsText,
 
                 //To indicate the separation of the LabelComboBox with some control that is to its left
                 MarginLeft = 10,
