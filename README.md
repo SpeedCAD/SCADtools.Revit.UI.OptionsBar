@@ -29,8 +29,8 @@ For more information on **OptionsBar**, please read our [Wiki](https://github.co
 You can reference the DLL in a Visual Studio project the same way you load any external library.
 | Version                      | DLL File                                                                                |
 |:-----------------------------|:----------------------------------------------------------------------------------------|
-| Revit 2023                   | [OptionsBar for Revit 2023](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.0.0/SCADtools.Revit.UI.OptionsBar_1.0.0_rvt2023.rar) |
-| Revit 2024                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.0.0/SCADtools.Revit.UI.OptionsBar_1.0.0_rvt2024.rar) |
+| Revit 2023                   | [OptionsBar for Revit 2023](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.0.0/SCADtools.Revit.UI.OptionsBar_1.0.0_rvt2023.zip) |
+| Revit 2024                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.0.0/SCADtools.Revit.UI.OptionsBar_1.0.0_rvt2024.zip) |
 
 ## :rocket: Making
 - The DLL files are made using [**Visual Studio**](https://github.com/microsoft) 2022.
