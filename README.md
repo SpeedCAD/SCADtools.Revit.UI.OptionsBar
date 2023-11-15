@@ -186,7 +186,7 @@ namespace SCADtools.OptionsBarSample
             {
                 Label = "Use amount settings",
             
-                //To indicate the separation of the LabelTextBox with some control that is to its left
+                //To indicate the separation of the LabelCheckBox with some control that is to its left
                 MarginLeft = 10,
             
                 //Implement controls to manage the IsChecked property
