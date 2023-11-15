@@ -182,6 +182,17 @@ namespace SCADtools.OptionsBarSample
                 }
             };
 
+            LabelCheckBox labelCheckBox = new LabelCheckBox()
+            {
+                Label = "Use amount settings",
+            
+                //To indicate the separation of the LabelTextBox with some control that is to its left
+                MarginLeft = 10,
+            
+                //Implement controls to manage the IsChecked property
+                EnabledElements = new List<UIElement>() { labelComboBox, labelTextBox }
+            };
+
             //Display the OptionsBar
             optionsBar.Show(new List<UIElement>()
                                 {
@@ -191,7 +202,8 @@ namespace SCADtools.OptionsBarSample
                                     button,
                                     new SCADtools.Revit.UI.Separator(),
                                     labelComboBox,
-                                    labelTextBox
+                                    labelTextBox,
+                                    labelCheckBox
                                 });
         }
 
