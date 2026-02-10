@@ -22,8 +22,8 @@ You can reference the DLL in a Visual Studio project the same way you load any e
 |:-----------------------------|:----------------------------------------------------------------------------------------|
 | Revit 2023                   | [OptionsBar for Revit 2023](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2023.zip) |
 | Revit 2024                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
-| Revit 2025                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
-| Revit 2026                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
+| Revit 2025                   | [OptionsBar for Revit 2025](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
+| Revit 2026                   | [OptionsBar for Revit 2026](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
 
 ## :rocket: Making
 - The DLL files are made using [**Visual Studio**](https://github.com/microsoft) 2026.
