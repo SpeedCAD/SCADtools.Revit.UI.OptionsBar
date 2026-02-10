@@ -33,11 +33,13 @@ You can reference the DLL in a Visual Studio project the same way you load any e
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using SCADtools.Revit.UI;
+using SCADtools.Revit.UI.OptionsBar;
+using SCADtools.Revit.UI.OptionsBar.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace SCADtools.OptionsBarSample
@@ -45,8 +47,6 @@ namespace SCADtools.OptionsBarSample
     [TransactionAttribute(TransactionMode.Manual)]
     internal class Sample : IExternalCommand
     {
-        private OptionsBar optionsBar;
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
@@ -56,26 +56,35 @@ namespace SCADtools.OptionsBarSample
             try
             {
                 //Initialize OptionsBar
-                optionsBar = new OptionsBar();
-
-                DisplayOptionsBar();
-
-                //Some instructions to execute in Revit
-                IList<Element> pickElementsByRectangle = uidoc.Selection.PickElementsByRectangle("Select elements.");
-
-                //Optionally, you can disable the options bar while Revit is working
-                optionsBar.IsEnabled = false;
-
-                using (Transaction tr = new Transaction(doc, "Transaction name"))
+                using (OptionsBar optionsBar = new OptionsBar())
                 {
-                    tr.Start();
+                    // build options bar
+                    BuildOptionsBar(optionsBar);
+                    // Show OptionsBar
+                    optionsBar.Show("Create Bending Detail");
 
-                    foreach (Element element in pickElementsByRectangle)
+                    // Some instructions to execute in Revit
+                    try
                     {
-                        //TODO: Your code logic here
-                    }
+                        IList<Element> pickElementsByRectangle =
+                            uidoc.Selection.PickElementsByRectangle("Select elements.");
 
-                    tr.Commit();
+                        using (Transaction tr = new Transaction(doc, "Transaction name"))
+                        {
+                            tr.Start();
+
+                            foreach (Element element in pickElementsByRectangle)
+                            {
+                                // TODO: Your code logic here
+                            }
+
+                            tr.Commit();
+                        }
+                    }
+                    catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+                    {
+                        return Result.Cancelled;
+                    }
                 }
 
                 return Result.Succeeded;
@@ -85,146 +94,129 @@ namespace SCADtools.OptionsBarSample
                 message = ex.Message;
                 return Result.Failed;
             }
-            finally
-            {
-                //Hide the OptionsBar (IMPORTANT)
-                optionsBar.Hide();
-            }
         }
 
-        private void DisplayOptionsBar()
+        private void BuildOptionsBar(OptionsBar optionsBar)
         {
-            //Initialize a TextBlock to display information at the start of the OptionsBar
-            TextBlock textBlock = new TextBlock()
+            // Initialize a LabelComboBoxImage to display a list of bar images
+            ObLabelComboBoxImage labelComboBoxImage = new ObLabelComboBoxImage()
             {
-                Text = "Create Bending Detail",
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(10, 0, 20, 0)
-            };
-
-            //Initialize a LabelComboBoxImage to display a list of bar images
-            LabelComboBoxImage labelComboBoxImage = new LabelComboBoxImage()
-            {
-                ShowLabel = false,
                 ItemsTextImage = GetRebarImages(),
 
-                //By default the width is 100
-                ComboBoxWidth = 220
+                ControlWidth = 220
             };
 
-            //Initialize a Button
-            SCADtools.Revit.UI.Button button = new SCADtools.Revit.UI.Button()
+            // Initialize a Button
+            ObButton button = new ObButton("...")
             {
-                Label = "...",
-
-                //To indicate the separation of the Button with some control that is to its left
+                // To indicate the separation of the Button with some control that is to its left
                 MarginLeft = 6,
-                
-                ControlToolTip = new ControlToolTip()
+
+                ObExpandedToolTip = new ObExpandedToolTip()
                 {
                     Title = "Rebar Shape Browser",
                     Content = "Launch/Close Rebar Shape Browser.",
                 }
             };
+            // Create some event
+            button.Click += (s, e) =>
+            {
+                // Code here
+            };
 
-            //Initialize some list of diameters
-            List<ComboBoxItemText> comboBoxItemsText = new List<ComboBoxItemText>()
+            // Initialize some list of diameters
+            ObservableCollection<ComboBoxItemText> comboBoxItemsText = new ObservableCollection<ComboBoxItemText>(
+                new List<ComboBoxItemText>()
                 {
                     new ComboBoxItemText() { ItemText = "8" },
                     new ComboBoxItemText() { ItemText = "10" },
                     new ComboBoxItemText() { ItemText = "12" },
                     new ComboBoxItemText() { ItemText = "16" }
-                };
-            //Initialize a LabelComboBox to display a list of diameters
-            LabelComboBox labelComboBox = new LabelComboBox()
+                });
+            // Initialize a LabelComboBox to display a list of diameters
+            ObLabelComboBox labelComboBox = new ObLabelComboBox("Diameter:")
             {
-                Label = "Diameter:",
                 ItemsText = comboBoxItemsText,
 
-                //To indicate the separation of the LabelComboBox with some control that is to its left
+                // To indicate the separation of the LabelComboBox with some control that is to its left
                 MarginLeft = 10,
 
-                //By default the width is 100
-                ComboBoxWidth = 52,
+                ControlWidth = 52,
 
-                ControlToolTip = new ControlToolTip()
+                ObExpandedToolTip = new ObExpandedToolTip()
                 {
                     Title = "Bar Diameter",
                     Content = "Specifies the bar diameter.",
                 }
             };
-            //Create some event
-            labelComboBox.ComboBoxControl.SelectionChanged += ComboBoxControlOnSelectionChanged;
+            // Select first element
+            labelComboBox.SelectedItem = comboBoxItemsText.FirstOrDefault();
+            // Create some event
+            labelComboBox.SelectionChanged += OnSelectionChanged;
 
-            //Initialize a LabelTextBox to indicate bar spacing
-            LabelTextBox labelTextBox = new LabelTextBox()
+            // Initialize a LabelTextBox to indicate bar spacing
+            ObLabelTextBox labelTextBox = new ObLabelTextBox("Spacing:", "20")
             {
-                Label = "Spacing:",
-                Text = "20",
-
-                //To indicate the separation of the LabelTextBox with some control that is to its left
+                // To indicate the separation of the LabelTextBox with some control that is to its left
                 MarginLeft = 10,
 
-                //By default the width is 50
-                TextBoxWidth = 52,
+                ControlWidth = 52,
 
-                ControlToolTip = new ControlToolTip()
+                ObExpandedToolTip = new ObExpandedToolTip()
                 {
                     Title = "Reinforcement Spacing",
                     Content = "Specifies the spacing for rebar.",
-                }
+                },
+
+                InputMode = ObInputMode.Numeric
             };
 
-            LabelCheckBox labelCheckBox = new LabelCheckBox()
+            ObLabelCheckBox labelCheckBox = new ObLabelCheckBox("Use amount settings")
             {
-                Label = "Use amount settings",
-            
-                //To indicate the separation of the LabelCheckBox with some control that is to its left
+                // To indicate the separation of the LabelCheckBox with some control that is to its left
                 MarginLeft = 10,
-            
-                //Implement controls to manage the IsChecked property
+
+                // Implement controls to manage the IsChecked property
                 EnabledElements = new List<UIElement>() { labelComboBox, labelTextBox }
             };
 
-            //Display the OptionsBar
-            optionsBar.Show(new List<UIElement>()
-                                {
-                                    textBlock,
-                                    new SCADtools.Revit.UI.Separator(),
-                                    labelComboBoxImage,
-                                    button,
-                                    new SCADtools.Revit.UI.Separator(),
-                                    labelComboBox,
-                                    labelTextBox,
-                                    labelCheckBox
-                                });
+            // Add controls to OptionsBar
+            optionsBar.AddControl(new ObSeparator());
+            optionsBar.AddControl(labelComboBoxImage);
+            optionsBar.AddControl(button);
+            optionsBar.AddControl(new ObSeparator());
+            optionsBar.AddControl(labelComboBox);
+            optionsBar.AddControl(labelTextBox);
+            optionsBar.AddControl(labelCheckBox);
         }
 
-        private void ComboBoxControlOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.ComboBox comboBox = (System.Windows.Controls.ComboBox)sender;
-            if (comboBox.SelectedItem != null)
+            var comboBox = sender as ObLabelComboBox;
+            var item = comboBox.SelectedItem;
+            if (item != null)
             {
-                ComboBoxItemText comboBoxItemText = (ComboBoxItemText)comboBox.SelectedItem;
-                MessageBox.Show("Selected item is: " + comboBoxItemText.ItemText);
+                TaskDialog.Show("OptionsBar", $"Selected item is: {item.ItemText}");
             }
         }
 
-        private List<ComboBoxItemTextImage> GetRebarImages()
+        private ObservableCollection<ComboBoxItemTextImage> GetRebarImages()
         {
-            //Initialize some list of bar images
-            return new List<ComboBoxItemTextImage>()
-            {
-                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B1",
-                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B1.png", UriKind.Absolute)),
-                    IsVisibleImageCollapsed = true },
-                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B2",
-                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B2.png", UriKind.Absolute)),
-                    IsVisibleImageCollapsed = true },
-                new ComboBoxItemTextImage() { ItemTitle = "Rebar Shape : ", ItemText = "B3",
-                    ItemImage = new BitmapImage(new Uri("pack://application:,,,/OptionsBarSample;component/Images/B3.png", UriKind.Absolute)),
-                    IsVisibleImageCollapsed = true }
-            };
+            string title = "Rebar Shape : ";
+            string imageBaseUri = "pack://application:,,,/OptionsBarSample;component/Images/";
+
+            string[] shapes = { "B1", "B2", "B3" };
+
+            return new ObservableCollection<ComboBoxItemTextImage>(
+                shapes.Select(shape => new ComboBoxItemTextImage
+                {
+                    ItemTitle = title,
+                    ItemText = shape,
+                    ItemImage = new BitmapImage(
+                        new Uri($"{imageBaseUri}{shape}.png", UriKind.Absolute)),
+                    IsVisibleImageCollapsed = true
+                })
+            );
         }
     }
 }
