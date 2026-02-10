@@ -3,20 +3,11 @@ Represents a custom options bar that will be displayed in the native Revit optio
 
 Its main methods are: **Show()** and **Hide()**.
 
-The OptionsBar library provides a set of predefined user-friendly controls that can be added to the options bar, such as **Button**, **LabelCheckBox**, **LabelComboBoxImage**, **LabelComboBox**, **LabelTextBox**, and **Separator**. Moreover, for users seeking further customization, the library allows the incorporation of user-defined controls. With these features, you can easily integrate a custom options bar into the Revit interface, allowing the user to access different settings without needing to open often annoying dialog boxes. Additionally, this library supports the integration of the custom options bar in conjunction with the native Revit options bar. Below, you'll find some examples of how this options bar is displayed.
+The OptionsBar library provides a set of predefined user-friendly controls that can be added to the options bar, such as **ObButton**, **ObLabelCheckBox**, **ObLabelComboBoxImage**, **ObLabelComboBox**, **ObLabelTextBox**, **ObLabelTextBlock**, and **ObSeparator**. Moreover, for users seeking further customization, the library allows the incorporation of user-defined controls. With these features, you can easily integrate a custom options bar into the Revit interface, allowing the user to access different settings without needing to open often annoying dialog boxes. Additionally, this library supports the integration of the custom options bar in conjunction with the native Revit options bar. Below, you'll find some examples of how this options bar is displayed.
 
 For more information on **OptionsBar**, please read our [Wiki](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/wiki).
 
-## OptionsBar in Revit 2023
-**Below is the integration of a custom options bar in combination with the native Revit options bar.**
-
-![OptionsBarCombined](./rvt2023/optionsbarcombined.gif)
-
-**Below is the integration of a custom options bar to modify an element.**
-
-![OptionsBarSingle](./rvt2023/optionsbarsingle.gif)
-
-## OptionsBar in Revit 2024
+## OptionsBar in Revit 2023+
 **Light Theme**
 
 ![OptionsBarLight](./rvt2024/optionsbarlight.gif)
@@ -31,9 +22,11 @@ You can reference the DLL in a Visual Studio project the same way you load any e
 |:-----------------------------|:----------------------------------------------------------------------------------------|
 | Revit 2023                   | [OptionsBar for Revit 2023](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2023.zip) |
 | Revit 2024                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
+| Revit 2025                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
+| Revit 2026                   | [OptionsBar for Revit 2024](https://github.com/SpeedCAD/SCADtools.Revit.UI.OptionsBar/releases/download/v1.1.1/SCADtools.Revit.UI.OptionsBar_1.1.1_rvt2024.zip) |
 
 ## :rocket: Making
-- The DLL files are made using [**Visual Studio**](https://github.com/microsoft) 2022.
+- The DLL files are made using [**Visual Studio**](https://github.com/microsoft) 2026.
 
 ## :keyboard: Code example
 ```c#
